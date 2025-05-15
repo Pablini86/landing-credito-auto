@@ -15,6 +15,15 @@ export const LandingPage = () => {
     setShowResult(true)
   }
 
+  const resetToInicio = () => {
+    const confirmReset = window.confirm("¿Estás seguro de que quieres volver al inicio? Se perderán los datos ingresados.")
+    if (confirmReset) {
+      setCreditResult(null)
+      setShowResult(false)
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-100">
       <header className="bg-white shadow-sm">
@@ -27,38 +36,30 @@ export const LandingPage = () => {
             <nav className="hidden md:block">
               <ul className="flex space-x-8">
                 <li>
-                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  <button
+                    onClick={resetToInicio}
+                    className="text-gray-600 hover:text-blue-600 transition-colors"
+                  >
                     Inicio
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  <a href="/nosotros" className="text-gray-600 hover:text-blue-600 transition-colors">
                     Nosotros
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  <a href="/servicios" className="text-gray-600 hover:text-blue-600 transition-colors">
                     Servicios
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">
+                  <a href="/contacto" className="text-gray-600 hover:text-blue-600 transition-colors">
                     Contacto
                   </a>
                 </li>
               </ul>
             </nav>
-            <button className="md:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
           </div>
         </div>
       </header>
@@ -84,7 +85,7 @@ export const LandingPage = () => {
             ) : (
               <div className="p-6 md:p-8">
                 <button
-                  onClick={() => setShowResult(false)}
+                  onClick={resetToInicio}
                   className="mb-4 text-blue-600 hover:text-blue-800 flex items-center"
                 >
                   <svg
@@ -135,22 +136,25 @@ export const LandingPage = () => {
               <h4 className="text-lg font-semibold mb-4">Enlaces rápidos</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <button
+                    onClick={resetToInicio}
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
                     Inicio
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <a href="/nosotros" className="text-gray-400 hover:text-white transition-colors">
                     Nosotros
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <a href="/servicios" className="text-gray-400 hover:text-white transition-colors">
                     Servicios
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <a href="/contacto" className="text-gray-400 hover:text-white transition-colors">
                     Contacto
                   </a>
                 </li>
@@ -159,10 +163,9 @@ export const LandingPage = () => {
             <div>
               <h4 className="text-lg font-semibold mb-4">Contacto</h4>
               <address className="not-italic text-gray-400">
-                <p>Av. Principal #123</p>
-                <p>Ciudad de México, México</p>
-                <p className="mt-2">info@autocredito.com</p>
-                <p>(55) 1234-5678</p>
+                <p>+52 33 3952 4608</p>
+                <p className="mt-2">if731210@iteso.mx</p>
+                <p>Ingeniero Financiero</p>
               </address>
             </div>
           </div>

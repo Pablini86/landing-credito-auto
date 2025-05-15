@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { PlanRequestModal } from "@/components/ui/plan-request-modal" // Importar modal
 
 type PaymentSimulatorProps = {
   amount: number
@@ -20,6 +21,7 @@ type PaymentPlan = {
 export const PaymentSimulator = ({ amount, interestRate }: PaymentSimulatorProps) => {
   const [selectedTerm, setSelectedTerm] = useState<number>(24)
   const [paymentPlans, setPaymentPlans] = useState<PaymentPlan[]>([])
+  const [showModal, setShowModal] = useState(false) // Estado para mostrar el modal
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("es-MX", {
@@ -31,20 +33,13 @@ export const PaymentSimulator = ({ amount, interestRate }: PaymentSimulatorProps
   }
 
   useEffect(() => {
-    // Calcular planes de pago para diferentes plazos
     const terms = [6, 12, 18, 24]
     const plans = terms.map((term) => {
-      // Convertir tasa anual a mensual
       const monthlyRate = interestRate / 100 / 12
-
-      // Calcular pago mensual usando fórmula de amortización
       const monthlyPayment =
-        (amount * (monthlyRate * Math.pow(1 + monthlyRate, term))) / (Math.pow(1 + monthlyRate, term) - 1)
-
-      // Costo total del crédito
+        (amount * (monthlyRate * Math.pow(1 + monthlyRate, term))) /
+        (Math.pow(1 + monthlyRate, term) - 1)
       const totalCost = monthlyPayment * term
-
-      // Intereses totales
       const totalInterest = totalCost - amount
 
       return {
@@ -74,7 +69,7 @@ export const PaymentSimulator = ({ amount, interestRate }: PaymentSimulatorProps
               <RadioGroupItem value={plan.term.toString()} id={`term-${plan.term}`} className="peer sr-only" />
               <Label
                 htmlFor={`term-${plan.term}`}
-                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-white p-4 hover:bg-gray-50 hover:border-gray-300 peer-data-[state=checked]:border-blue-600 peer-data-[state=checked]:bg-blue-50 [&:has([data-state=checked])]:border-blue-600 [&:has([data-state=checked])]:bg-blue-50 cursor-pointer"
+                className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-white p-4 hover:bg-gray-50 hover:border-gray-300 peer-data-[state=checked]:border-blue-600 peer-data-[state=checked]:bg-blue-50 cursor-pointer"
               >
                 <span className="text-sm font-medium mb-1">{plan.term} meses</span>
                 <span className="text-lg font-semibold text-blue-600">{formatCurrency(plan.monthlyPayment)}</span>
@@ -94,12 +89,10 @@ export const PaymentSimulator = ({ amount, interestRate }: PaymentSimulatorProps
               <h5 className="text-sm font-medium text-gray-500 mb-1">Pago mensual</h5>
               <p className="text-2xl font-semibold text-gray-900">{formatCurrency(selectedPlan.monthlyPayment)}</p>
             </div>
-
             <div>
               <h5 className="text-sm font-medium text-gray-500 mb-1">Costo total del crédito</h5>
               <p className="text-2xl font-semibold text-gray-900">{formatCurrency(selectedPlan.totalCost)}</p>
             </div>
-
             <div>
               <h5 className="text-sm font-medium text-gray-500 mb-1">Intereses totales</h5>
               <p className="text-2xl font-semibold text-gray-900">{formatCurrency(selectedPlan.totalInterest)}</p>
@@ -107,10 +100,21 @@ export const PaymentSimulator = ({ amount, interestRate }: PaymentSimulatorProps
           </div>
 
           <div className="mt-6">
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">Solicitar este plan</Button>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => setShowModal(true)}>
+              Solicitar este plan
+            </Button>
           </div>
         </div>
+      )}
+
+      {selectedPlan && (
+        <PlanRequestModal
+          visible={showModal}
+          onClose={() => setShowModal(false)}
+          plan={selectedPlan}
+        />
       )}
     </div>
   )
 }
+
