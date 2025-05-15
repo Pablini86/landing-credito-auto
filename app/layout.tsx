@@ -2,9 +2,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: 'Landing Crédito Auto - ITESO',
+  description: 'Simulador interactivo desarrollado por Pablo Lemus',
+  generator: 'Next.js',
+  icons: {
+      icon: 'iteso.png',
+      },
 }
 
 export default function RootLayout({
@@ -13,8 +16,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="es">
+      <body>
+        {children}
+        <footer className="text-center text-sm text-gray-600 mt-10 mb-4">
+          <img src="/iteso.png" alt="Logo ITESO" className="h-10 mx-auto mb-2" />
+          Esta página web fue desarrollada por <strong>Pablo Lemus</strong> como parte de su proyecto final de modelos de crédito.
+        </footer>
+      </body>
     </html>
   )
 }
