@@ -50,7 +50,7 @@ export const LandingPage = () => {
                 </li>
                 <li>
                   <a href="/servicios" className="text-gray-600 hover:text-blue-600 transition-colors">
-                    Servicios
+                    Documentaciòn
                   </a>
                 </li>
                 <li>
@@ -150,7 +150,7 @@ export const LandingPage = () => {
                 </li>
                 <li>
                   <a href="/servicios" className="text-gray-400 hover:text-white transition-colors">
-                    Servicios
+                    Documentaciòn
                   </a>
                 </li>
                 <li>
